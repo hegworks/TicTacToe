@@ -71,15 +71,31 @@ class Game extends Component {
 						: "X\t\t\t====>\t\t\tO");
 		}
 		return (
-			<div className="game">
-				<Typography style={{ whiteSpace: "pre" }}>{status}</Typography>
-				<div className="game-board">
+			<div
+				style={{
+					position: "absolute",
+					margin: "0",
+					top: "50%",
+					left: "50%",
+					transform: "translate(-50%, -50%)"
+				}}
+			>
+				<div style={{ float: "left" }}>
+					<Typography
+						style={{ whiteSpace: "pre", textAlign: "center" }}
+					>
+						{status}
+					</Typography>
+
 					<Board
 						sqrVals={current.squares}
 						handleClick={i => this.handleClick(i)}
 					/>
 				</div>
-				<List subheader={<ListSubheader>History</ListSubheader>}>
+				<List
+					style={{ float: "left" }}
+					subheader={<ListSubheader>History</ListSubheader>}
+				>
 					{moves}
 				</List>
 			</div>

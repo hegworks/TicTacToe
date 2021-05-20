@@ -10,6 +10,7 @@ const myStyles = makeStyles({
 		maxWidth: "10vw",
 		minWidth: "10vw",
 		borderRadius: "0",
+		fontSize: "50px",
 		"@media(max-Width: 700px)": {
 			maxHeight: "25vw",
 			minHeight: "25vw",
