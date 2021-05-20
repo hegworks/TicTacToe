@@ -3,15 +3,19 @@ import Square from "./Square";
 
 function Board() {
 	const [sqrVals, setSqrVals] = useState(Array(9).fill(null));
+	const [xIsNext, setXIsNext] = useState(true);
 	const status = "next player: X";
+
 	let renderSquare = i => {
 		return <Square value={sqrVals[i]} onClick={() => handleClick(i)} />;
 	};
 	let handleClick = i => {
 		const sqrs = sqrVals.slice();
-		sqrs[i] = "X";
+		sqrs[i] = xIsNext ? "X" : "O";
+		setXIsNext(!xIsNext);
 		setSqrVals(sqrs);
 	};
+
 	return (
 		<div>
 			<div className="status">{status}</div>
