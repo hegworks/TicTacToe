@@ -61,12 +61,15 @@ class Game extends Component {
 		});
 
 		let status;
-		status = winner
-			? winner + " Won!"
-			: (status = this.state.xIsNext
-					? "X\t\t\t<====\t\t\tO"
-					: "X\t\t\t====>\t\t\tO");
-
+		if (this.state.stepNumber == 9) {
+			status = "Draw!";
+		} else {
+			status = winner
+				? winner + " Won!"
+				: (status = this.state.xIsNext
+						? "X\t\t\t<====\t\t\tO"
+						: "X\t\t\t====>\t\t\tO");
+		}
 		return (
 			<div className="game">
 				<Typography style={{ whiteSpace: "pre" }}>{status}</Typography>
