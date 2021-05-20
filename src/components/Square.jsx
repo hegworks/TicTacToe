@@ -20,17 +20,15 @@ const myStyles = makeStyles({
 });
 
 function Square(props) {
-	// const styleClasses = myStyles();
-	const [value, setValue] = useState();
 	return (
 		<Button
 			variant="outlined"
 			className={myStyles().myButton}
 			onClick={() => {
-				setValue(props.value);
+				props.onClick();
 			}}
 		>
-			{value}
+			{props.value}
 		</Button>
 	);
 }
