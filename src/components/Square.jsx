@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
 const myStyles = makeStyles({
@@ -20,10 +20,17 @@ const myStyles = makeStyles({
 });
 
 function Square(props) {
-	const styleClasses = myStyles();
+	// const styleClasses = myStyles();
+	const [value, setValue] = useState();
 	return (
-		<Button variant="outlined" className={styleClasses.myButton}>
-			{props.value}
+		<Button
+			variant="outlined"
+			className={myStyles().myButton}
+			onClick={() => {
+				setValue(props.value);
+			}}
+		>
+			{value}
 		</Button>
 	);
 }
