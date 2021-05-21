@@ -32,7 +32,8 @@ const styles = theme => ({
 
 	boardAndStatusFlexContainer: {
 		display: "flex",
-		flexDirection: "column"
+		flexDirection: "column",
+		marginTop: "10px"
 		// alignContent: "center",
 	},
 
@@ -41,38 +42,46 @@ const styles = theme => ({
 		textAlign: "center",
 		fontSize: "100px",
 		marginTop: "10px",
-		marginBottom: "10px"
+		marginBottom: "10px",
+		"@media(max-Width: 700px)": {
+			fontSize: "50px"
+		}
 	},
 
 	subtitle: {
 		// whiteSpace: "pre",
 		fontSize: "50px",
 		marginTop: "0",
-		marginBottom: "0"
+		marginBottom: "0",
+		"@media(max-Width: 700px)": {
+			fontSize: "25px"
+		}
 	},
 
 	divider: {
 		marginBottom: "10px",
-		width: "50%",
+		width: "500px",
 		textAlign: "center",
 		marginLeft: "auto",
-		marginRight: "auto"
+		marginRight: "auto",
+		"@media(max-Width: 700px)": {
+			width: "100%"
+		}
 	},
 
 	statusText: {
-		// whiteSpace: "pre"
+		whiteSpace: "pre"
 		// textAlign: "center"
 	},
 
-	board: {
-		"@media(max-Width: 700px)": {}
-	},
+	board: {},
 
 	list: {
 		backgroundColor: theme.palette.background.paper,
 		marginLeft: "10px",
+		marginTop: "10px",
 		"@media(max-Width: 700px)": {
-			width: "50%",
+			width: "300px",
 			margin: "auto",
 			marginTop: "10px"
 		}
@@ -152,9 +161,7 @@ class Game extends Component {
 		} else {
 			status = winner
 				? winner + " Won!"
-				: (status = this.state.xIsNext
-						? "X\t\t\t<====\t\t\tO"
-						: "X\t\t\t====>\t\t\tO");
+				: (status = this.state.xIsNext ? "X\t<====\tO" : "X\t====>\tO");
 		}
 		return (
 			<div classmae={classes.wholeDiv}>

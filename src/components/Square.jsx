@@ -14,6 +14,12 @@ const myStyles = makeStyles({
 		minWidth: "100px",
 		borderRadius: "0",
 		fontSize: "40px"
+	},
+	red: {
+		backgroundColor: "#e74c3c !important"
+	},
+	blue: {
+		backgroundColor: "#3498db !important"
 	}
 });
 
@@ -21,7 +27,15 @@ function Square(props) {
 	return (
 		<Button
 			variant="outlined"
-			className={myStyles().myButton}
+			className={
+				myStyles().myButton +
+				" " +
+				(props.value == null
+					? myStyles().black
+					: props.value === "O"
+					? myStyles().red
+					: myStyles().blue)
+			}
 			onClick={() => {
 				props.onClick();
 			}}
