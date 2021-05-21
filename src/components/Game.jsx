@@ -5,8 +5,86 @@ import {
 	ListItem,
 	ListItemText,
 	ListSubheader,
-	Typography
+	Divider,
+	Typography,
+	withStyles
 } from "@material-ui/core";
+
+/**
+ * CSS
+ */
+const styles = theme => ({
+	wholeDiv: {
+		margin: "0"
+	},
+
+	wholeFlexContainer: {
+		margin: "0",
+		display: "flex",
+		justifyContent: "center",
+		textAlign: "center",
+		"@media(max-Width: 700px)": {
+			flexDirection: "column",
+			justifyContent: "center",
+			textAlign: "center"
+		}
+	},
+
+	boardAndStatusFlexContainer: {
+		display: "flex",
+		flexDirection: "column"
+		// alignContent: "center",
+	},
+
+	title: {
+		// whiteSpace: "pre",
+		textAlign: "center",
+		fontSize: "100px",
+		marginTop: "10px",
+		marginBottom: "10px"
+	},
+
+	subtitle: {
+		// whiteSpace: "pre",
+		fontSize: "50px",
+		marginTop: "0",
+		marginBottom: "0"
+	},
+
+	divider: {
+		marginBottom: "10px",
+		width: "50%",
+		textAlign: "center",
+		marginLeft: "auto",
+		marginRight: "auto"
+	},
+
+	statusText: {
+		// whiteSpace: "pre"
+		// textAlign: "center"
+	},
+
+	board: {
+		"@media(max-Width: 700px)": {}
+	},
+
+	list: {
+		backgroundColor: theme.palette.background.paper,
+		marginLeft: "10px",
+		"@media(max-Width: 700px)": {
+			width: "50%",
+			margin: "auto",
+			marginTop: "10px"
+		}
+		// fontSize: "100px"
+	},
+
+	listItem: {},
+
+	listItemText: {
+		textAlign: "center"
+	}
+});
 
 class Game extends Component {
 	constructor(props) {
@@ -22,7 +100,8 @@ class Game extends Component {
 		const history = this.state.history.slice(0, this.state.stepNumber + 1);
 		const current = history[history.length - 1];
 		const squares = current.squares.slice();
-		if (!squares[i] && !this.winner) {
+
+		if (!squares[i] && !calculateWinner(squares)) {
 			let sqrs = squares.slice();
 			sqrs[i] = this.state.xIsNext ? "X" : "O";
 			this.setState({
@@ -45,6 +124,8 @@ class Game extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
+
 		const history = this.state.history;
 		const current = history[this.state.stepNumber];
 		const winner = calculateWinner(current.squares);
@@ -52,16 +133,21 @@ class Game extends Component {
 		const moves = history.map((step, move) => {
 			const desc = move ? "Go to move #" + move : "Go to game start";
 			return (
-				<ListItem key={move} button>
-					<ListItemText on onClick={() => this.jumpTo(move)}>
-						{desc}
-					</ListItemText>
-				</ListItem>
+				<div>
+					<Divider />
+					<ListItem classname={classes.listItem} key={move} button>
+						<ListItemText
+							classname={classes.listItemText}
+							onClick={() => this.jumpTo(move)}
+							primary={desc}
+						></ListItemText>
+					</ListItem>
+				</div>
 			);
 		});
 
 		let status;
-		if (this.state.stepNumber == 9) {
+		if (!winner && this.state.stepNumber === 9) {
 			status = "Draw!";
 		} else {
 			status = winner
@@ -71,33 +157,42 @@ class Game extends Component {
 						: "X\t\t\t====>\t\t\tO");
 		}
 		return (
-			<div
-				style={{
-					position: "absolute",
-					margin: "0",
-					top: "50%",
-					left: "50%",
-					transform: "translate(-50%, -50%)"
-				}}
-			>
-				<div style={{ float: "left" }}>
-					<Typography
-						style={{ whiteSpace: "pre", textAlign: "center" }}
-					>
-						{status}
-					</Typography>
-
-					<Board
-						sqrVals={current.squares}
-						handleClick={i => this.handleClick(i)}
-					/>
-				</div>
-				<List
-					style={{ float: "left" }}
-					subheader={<ListSubheader>History</ListSubheader>}
+			<div classmae={classes.wholeDiv}>
+				<Typography
+					variant="h1"
+					flexItem="true"
+					className={classes.title}
 				>
-					{moves}
-				</List>
+					Tic Tac Toe
+					<Typography
+						variant="subtitle1"
+						className={classes.subtitle}
+					>
+						by HEGworks
+					</Typography>
+				</Typography>
+
+				<Divider className={classes.divider} variant="middle" />
+
+				<div className={classes.wholeFlexContainer}>
+					<div className={classes.boardAndStatusFlexContainer}>
+						<Typography variant="h4" className={classes.statusText}>
+							{status}
+						</Typography>
+
+						<Board
+							className={classes.board}
+							sqrVals={current.squares}
+							handleClick={i => this.handleClick(i)}
+						/>
+					</div>
+					<List
+						className={classes.list}
+						subheader={<ListSubheader>History</ListSubheader>}
+					>
+						{moves}
+					</List>
+				</div>
 			</div>
 		);
 	}
@@ -127,4 +222,4 @@ function calculateWinner(squares) {
 	return null;
 }
 
-export default Game;
+export default withStyles(styles)(Game);
